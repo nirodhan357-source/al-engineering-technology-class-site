@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>චලනය හා බල සම්ප්‍රේෂණය</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Sinhala:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#eef2f5;--tx:#1d2b36;--mu:#53636f;--cd:#fff;--ln:#cfd9e0;--ac:#0b7a75;--on:#fff;--hi:#f2a900;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111a21;--tx:#e6edf2;--mu:#9fb0bc;--cd:#1a2630;--ln:#2e3f4c;--ac:#3fc1b9;--on:#0d1a20}}
+:root[data-theme="dark"]{--bg:#111a21;--tx:#e6edf2;--mu:#9fb0bc;--cd:#1a2630;--ln:#2e3f4c;--ac:#3fc1b9;--on:#0d1a20}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.7 'Noto Sans Sinhala','Iskoola Pota','Nirmala UI',sans-serif}
+header,main,nav{max-width:860px;margin:0 auto;padding:0 16px}
+h1{font-size:clamp(1.6rem,5vw,2.4rem);font-weight:800;margin:20px 0 2px;line-height:1.35}
+h2{font-size:1.4rem;margin:16px 0 0;line-height:1.4}
+h3{font-size:1rem;margin:0 0 4px;color:var(--mu);font-weight:600}
+p{margin:4px 0}
+.mu{color:var(--mu)}
+nav{display:flex;gap:6px;overflow-x:auto;padding-top:12px;padding-bottom:8px}
+button{font:inherit;font-size:.95rem;border:1px solid var(--ln);background:var(--cd);color:var(--tx);padding:6px 14px;border-radius:8px;cursor:pointer;white-space:nowrap}
+button[aria-selected=true],button.on{background:var(--ac);color:var(--on);border-color:var(--ac)}
+button:disabled{opacity:.55;cursor:default}
+button:focus-visible,input:focus-visible{outline:3px solid var(--hi);outline-offset:2px}
+.row{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+canvas{width:100%;height:auto;display:block;background:#f7f9fb;border:1px solid var(--ln);border-radius:10px;margin:12px 0 0}
+.card{background:var(--cd);border:1px solid var(--ln);border-radius:10px;padding:16px;margin:14px 0}
+.fx{font-size:1.3rem;line-height:2.4}
+.fx>div{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.fr{display:inline-flex;flex-direction:column;align-items:center}
+.fr i{font-style:normal;padding:2px 8px;display:flex;gap:6px;align-items:center}
+.fr i:first-child{border-bottom:2px solid var(--tx)}
+.iv{display:inline-flex;flex-direction:column;align-items:center;line-height:1.1}
+.iv input{width:5.2em;font:inherit;font-size:1.05rem;text-align:center;padding:4px;border:2px solid var(--ac);border-radius:6px;background:var(--bg);color:var(--tx)}
+.iv small{font-size:.75rem;color:var(--mu)}
+output{font-weight:800;color:var(--ac);background:rgba(242,169,0,.18);padding:2px 10px;border-radius:6px}
+ul{margin:8px 0 0;padding-left:20px}
+
+header{text-align:center;padding-top:8px}
+#nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);max-width:none;border-bottom:1px solid var(--ln);justify-content:flex-start}
+#nav a{flex:none;text-decoration:none;color:var(--tx);border:1px solid var(--ln);background:var(--cd);padding:4px 12px;border-radius:8px;font-size:.9rem;white-space:nowrap}
+#nav a:hover,#nav a:focus-visible{background:var(--ac);color:var(--on)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+section.sec{padding-top:18px}
+section.sec>h2{border-left:6px solid var(--ac);padding-left:12px}
+.fm{border-left:6px solid var(--hi)}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{border:1px solid var(--ln);padding:6px 8px;text-align:left}
+th{background:var(--ac);color:var(--on)}
+.tw{overflow-x:auto}
+details{border:1px solid var(--ln);border-radius:8px;padding:8px 12px;margin:8px 0;background:var(--cd)}
+summary{cursor:pointer;font-weight:600}
+dt{font-weight:600;margin-top:8px}dd{margin:0 0 0 12px;color:var(--mu)}
+.tip{background:rgba(242,169,0,.15);border-left:5px solid var(--hi);padding:8px 12px;border-radius:6px;margin:10px 0}
+footer{text-align:center;color:var(--mu);padding:24px 16px}
+</style>
+</head>
+<body>
+<div style="position:sticky;top:0;z-index:10;padding:8px 16px;background:var(--bg);border-bottom:1px solid var(--ln)"><a href="motion.html" style="color:var(--ac);font-weight:700;text-decoration:none">← පාඩම 08 ප්‍රධාන කොටස් වෙත</a></div>
+<header><h1>චලනය හා බල සම්ප්‍රේෂණය</h1><p class="mu">12 ශ්‍රේණිය, ඉංජිනේරු තාක්ෂණවේදය</p></header>
+<nav id="nav" aria-label="පාඩම් කොටස්"></nav>
+<main id="main"></main>
+<footer>චලනය හා බල සම්ප්‍රේෂණය · 12 ශ්‍රේණිය ඉංජිනේරු තාක්ෂණවේදය</footer>
+<script>
+
+let c;const $=s=>document.querySelector(s),TAU=Math.PI*2,W=640,H=320;
+const INK='#1d2b36',ST='#9db0bf',LT='#dde6ee',AM='#f2a900',TL='#0b7a75',RD='#c8412b';
+const fr=(a,b)=>`<span class=fr><i>${a}</i><i>${b}</i></span>`;
+const rate=n=>Math.min(Math.max(n,0),3000)*0.0022;
+const fmt=x=>isFinite(x)?(+x.toFixed(2)).toLocaleString('en-US'):'—';
+const SYM={N:'N',N1:'N₁',D1:'D₁',D2:'D₂',T1:'T₁',T2:'T₂',mu:'μ',W:'W',R:'R',n:'n',Q:'τ'};
+const T=[
+['m','චලිත ආකාර','මූලික චලිත ආකාර','අප අවට දකින චලිත ආකාර හතර සජීවීව බලන්න.'],
+['c','චලිත පරිවර්තන','චලිත පරිවර්තන','එක් චලිත ආකාරයක් තවත් ආකාරයකට හරවන යාන්ත්‍රණ.'],
+['w','කෝණික වේගය','කෝණික වේගය සහ භ්‍රමණ වේගය','එන්ජිමේ ක්‍රෑන්ක් පතුවළේ භ්‍රමණ වේගය.'],
+['b','පටි සහ කප්පි','පටි සහ කප්පි පද්ධති','වාහනවල ෆෑන් බෙල්ට් පද්ධතිය.'],
+['ch','දම්වැල් සහ ස්ප්‍රොකට්','දම්වැල් සහ ස්ප්‍රොකට් පද්ධති','මෝටර් සයිකලයක ඉදිරි සහ පසුපස ස්ප්‍රොකට් අතර දම්වැල් ක්‍රියාකාරීත්වය"�u�
+['g','ගියර පද්ධති','ගියර පද්ධති','වාහනවල ගියර පෙට්ටිය (Gearbox) සහ ඩිෆරෙන්ෂල් පද්ධතිය.'],
+['cl','ක්ලච් පද්ධති','ක්ලච් පද්ධති','වාහනවල තනි තහඩු ක්ලච් එක (Single Plate Clutch).'],
+['s','පතුවළ සහ බෙයාරිං','පතුවළ සහ බෙයාරිං පද්ධති','ලොරි සහ බස් රථවල ප්‍රොපෙලර් පතුවළ සහ බෙයාරිං.']];
+const S={
+m:[['රේඛීය චලිතය','මෝටර් රථයක් සරල මාර්ගයක් දිගේ ගමන් කරයි.'],['භ්‍රමණ චලිතය','රථයක රෝදය අක්ෂයක් වටා කැරකෙයි.'],['අනුවැටුම් චලිතය','එන්ජිමේ සිලින්ඩරය තුළ පිස්ටනය ඉහළට සහ පහළට චලනය වේ.'],['දෝලන චලිතය','ඔරලෝසුවේ පෙන්ඩුලම නියමිත ලක්ෂයක් වටා දෙපැත්තට පැද්දේ.']],
+c:[['රේඛීය ➔ භ්‍රමණ','රැක් සහ පිනියන්: ඉදිරියට පසුපටට යන රැක් එක පිනියනය කරකවයි.'],['භ්‍රමණ ➔ රේඛීය','ජැක් එකේ හැන්ඩලය කරකැවූ විට ස්ක්‍රූව හරහා වේදිකාව ඉහළ පහළ යයි. ස්ටියරිං පද්ධතියද මෙසේම ක්‍රියා කරයි.'],['භ්‍රමණ ➔ අනුවැටුම්','කැම් සහ ෆොලෝවර්: කැම් ෂාෆ්ට් එක කැරකෙද්දී වෑල්ව් එක ඉහළ පහළ යයි.']],
+};
+const F={
+w:{h:`<div>ω = ${fr('2 × π × [N]','60')} = {0} rad/s</div>`,d:{N:1450},v:[['ω','කෝණික වේගය (rad/s)'],['N','භ්‍රමණ වේගය (rpm)']],f:v=>[TAU*v.N/60]},
+b:{h:`<div>N₂ = [N1] × ${fr('[D1]','[D2]')} = {0} rpm</div>`,d:{N1:1000,D1:100,D2:200},v:[['N₂','ධාවිත කප්පියේ භ්‍රමණ වේගය (rpm)'],['N₁','ධාවක කප්පියේ භ්‍රමණ වේගය (rpm)'],['D₁','ධාවක කප්පියේ විෂ්කම්භය (mm)'],['D₂','ධාවිත කප්පියේ විෂ්කම්භය (mm)']],f:v=>[v.N1*v.D1/v.D2]},
+ch:{h:`<div>N₂ = [N1] × ${fr('[T1]','[T2]')} = {0} rpm</div>`,d:{N1:600,T1:14,T2:42},v:[['N₂','ධාවිත ස්ප්‍රොකට් එකේ භ්‍රමණ වේගය (rpm)'],['N₁','ධාවක ස්ප්‍රොකට් එකේ භ්‍රමණ වේගය (rpm)'],['T₁','ධාවක ස්ප්‍රොකට් එකේ දත් ගණන'],['T₂','ධාවිත ස්ප්‍රොකට් එකේ දත් ගණන']],f:v=>[v.N1*v.T1/v.T2]},
+g:{h:`<div>GR = ${fr('[T2]','[T1]')} = {0}</div><div>N₂ = ${fr('[N1] × [T1]','[T2]')} = {1} rpm</div>`,d:{N1:1200,T1:20,T2:40},v:[['GR','ගියර අනුපාතය'],['N₂','ධාවිත ගියරයේ භ්‍රමණ වේගය (rpm)'],['N₁','ධාවක ගියරයේ භ්‍රමණ වේගය (rpm)'],['T₁','ධාවක ගියරයේ දත් ගණන'],['T₂','ධාවිත ගියරයේ දත් ගණන']],f:v=>[v.T2/v.T1,v.N1*v.T1/v.T2]},
+cl:{h:`<div>τ = [mu] × [W] × [R] × [n] = {0} N m</div>`,d:{mu:.3,W:1500,R:.1,n:2},v:[['τ','සම්ප්‍රේෂණය කළ හැකි ව්‍යවර්තය (N m)'],['μ','ඝර්ෂණ සංගුණකය'],['W','ස්ප්‍රින්ග් මඟින් ඇති කරන බලය (N)'],['R','ඝර්ෂණ තහඩුවේ මධ්‍යන්‍ය අරය (m)'],['n','ඝර්ෂණ පෘෂ්ඨ ගණන']],f:v=>[v.mu*v.W*v.R*v.n]},
+s:{h:`<div>P = ${fr('2 × π × [N] × [Q]','60')} = {0} W = {1} kW</div>`,d:{N:2000,Q:150},v:[['P','සම්ප්‍රේෂණය වන ක්ෂමතාව (W)'],['N','පතුවළේ භ්‍රමණ වේගය (rpm)'],['τ','පතුවළේ ව්‍යවර්තය (N m)']],f:v=>[TAU*v.N*v.Q/60,TAU*v.N*v.Q/60000]}};
+let cur,sb=0,V={},A=[0,0],tm=0,CL=1,sp=1,gap=0;
+const bad=()=>Object.values(V).some(x=>!(x>0));
+const P=(x,y,r,a)=>[x+r*Math.cos(a),y+r*Math.sin(a)];
+function lab(t,x,y,sz=14,col=INK,al='center'){c.fillStyle=col;c.font=`600 ${sz}px 'Noto Sans Sinhala','Iskoola Pota',sans-serif`;c.textAlign=al;c.fillText(t,x,y)}
+function grid(){c.strokeStyle='#e3eaf0';c.lineWidth=1;c.beginPath();for(let x=0;x<=W;x+=40){c.moveTo(x,0);c.lineTo(x,H)}for(let y=0;y<=H;y+=40){c.moveTo(0,y);c.lineTo(W,y)}c.stroke()}
+function wheel(x,y,r,z,a,fill){c.save();c.fillStyle=fill||ST;c.strokeStyle=INK;c.lineWidth=2;c.beginPath();
+ if(z){const s=TAU/z,t=Math.min(8,r*.15);for(let i=0;i<z;i++){const b=a+i*s;[[r-t,0],[r+t*.6,.12],[r+t*.6,.45],[r-t,.6]].forEach(([q,f],j)=>{const p=P(x,y,q,b+f*s);(i||j)?c.lineTo(...p):c.moveTo(...p)})}c.closePath()}else c.arc(x,y,r,0,TAU);
+ c.fill();c.stroke();c.fillStyle=LT;c.beginPath();c.arc(x,y,r*.55,0,TAU);c.fill();c.stroke();
+ c.strokeStyle=AM;c.lineWidth=4;c.beginPath();c.moveTo(x,y);c.lineTo(...P(x,y,r*.5,a));c.stroke();
+ c.fillStyle=INK;c.beginPath();c.arc(x,y,5,0,TAU);c.fill();c.restore()}
+function shaft(x1,x2,y,a,h,fill){c.fillStyle=fill||ST;c.strokeStyle=INK;c.lineWidth=2;c.fillRect(x1,y-h/2,x2-x1,h);c.strokeRect(x1,y-h/2,x2-x1,h);
+ c.strokeStyle='rgba(29,43,54,.45)';c.lineWidth=1.5;c.beginPath();const q=h/4,ph=(a*h*.1)%q;for(let k=0;k<4;k++){const yy=y-h/2+ph+k*q;c.moveTo(x1,yy);c.lineTo(x2,yy)}c.stroke()}
+function pair(r1,r2,z1,z2,a1,a2,chain,l1,l2,n1,n2){const d=r1+r2+110,x1=(W-d)/2,x2=x1+d,y=140,f=Math.asin((r1-r2)/d),h=Math.PI/2;
+ c.save();c.beginPath();c.arc(x1,y,r1,h-f,3*h+f);c.arc(x2,y,r2,-h+f,h-f);c.closePath();c.lineJoin='round';
+ const s=A[0]*r1;c.strokeStyle=INK;c.lineWidth=chain?7:9;if(chain){c.strokeStyle='#5a6b78';c.setLineDash([8,5]);c.lineDashOffset=-s}c.stroke();
+ if(!chain){c.strokeStyle='#fff';c.lineWidth=2;c.setLineDash([3,17]);c.lineDashOffset=-s;c.stroke()}c.restore();
+ wheel(x1,y,r1,z1,a1);wheel(x2,y,r2,z2,a2);
+ [[x1,r1,l1,n1],[x2,r2,l2,n2]].forEach(([x,r,l,n])=>{lab(l,x,y+r+30);lab(fmt(n)+' rpm',x,y+r+50,14,TL)})}
+function recip(x,by,a){const r=34,L=100,px=x+r*Math.sin(a),py=by-r*Math.cos(a),y=py-Math.sqrt(L*L-(r*Math.sin(a))**2);
+ c.fillStyle='#e8eef3';c.strokeStyle=INK;c.lineWidth=3;c.fillRect(x-34,60,68,160);c.strokeRect(x-34,60,68,160);c.fillStyle='#fff';c.fillRect(x-28,70,56,150);
+ c.strokeStyle=INK;c.lineWidth=8;c.beginPath();c.moveTo(x,y);c.lineTo(px,py);c.stroke();
+ c.fillStyle=AM;c.fillRect(x-26,y-30,52,32);c.strokeStyle=INK;c.lineWidth=2;c.strokeRect(x-26,y-30,52,32);
+ c.beginPath();c.arc(x,by,r,0,TAU);c.fillStyle=LT;c.fill();c.stroke();c.fillStyle=RD;c.beginPath();c.arc(px,py,7,0,TAU);c.fill()}
+function pend(){const th=.45*Math.cos(tm*3.9),bx=320+190*Math.sin(th),by=50+190*Math.cos(th);
+ c.strokeStyle=INK;c.lineWidth=3;c.fillStyle='#efe6d6';c.fillRect(230,16,180,290);c.strokeRect(230,16,180,290);
+ c.beginPath();c.moveTo(320,50);c.lineTo(bx,by);c.stroke();c.fillStyle=AM;c.beginPath();c.arc(bx,by,22,0,TAU);c.fill();c.stroke();
+ c.fillStyle=INK;c.beginPath();c.arc(320,50,5,0,TAU);c.fill();lab('නියමිත ලක්ෂය (අක්ෂය)',460,54,13,INK,'left')}
+const rc=t=>34+30*Math.pow(Math.max(0,Math.cos(t)),3);
+const D={
+m(dt){if(sb==0){c.fillStyle='#b8c4cd';c.fillRect(0,232,W,10);const x=((tm*90)%(W+200))-170;
+  c.fillStyle=TL;c.fillRect(x,172,140,32);c.fillRect(x+32,146,76,28);c.fillStyle=LT;c.fillRect(x+40,152,28,18);c.fillRect(x+72,152,28,18);
+  wheel(x+30,214,18,0,tm*5,'#2b3a45');wheel(x+110,214,18,0,tm*5,'#2b3a45');lab('සරල රේඛාවක් දිගේ චලිතය  ➔',320,280,16,TL)}
+ else if(sb==1){wheel(320,150,105,0,tm*2,'#2b3a45');lab('අක්ෂය වටා භ්‍රමණය',320,298,16,TL)}
+ else if(sb==2){recip(320,260,tm*4);lab('සිලින්ඩරය',200,140,14);lab('පිස්ටනය',460,120,14,INK,'left');lab('ක්‍රෑන්ක් පතුවළ',210,265,14);lab('ඉහළ ↕ පහළ',460,170,16,TL,'left')}
+ else pend()},
+c(dt){if(sb==0){const x=70*Math.sin(tm*1.1),a=-x/50,p=TAU*50/12,o=((x%p)+p)%p;
+  c.fillStyle=ST;c.strokeStyle=INK;c.lineWidth=2;c.fillRect(30,176,580,30);c.strokeRect(30,176,580,30);
+  for(let i=-1;i<24;i++){const tx=30+o+i*p;if(tx>30&&tx<600)c.fillRect(tx,166,p/2,10)}
+  wheel(320,115,50,12,a);lab('පිනියන් (භ්‍රමණය)',320,40,15,TL);lab('රැක් (රේඛීය චලිතය) ↔',320,240,15)}
+ else if(sb==1){const a=tm*3,p=(a*3)%280,y=250-(p<140?p:280-p);
+  c.fillStyle=ST;c.strokeStyle=INK;c.lineWidth=2;c.fillRect(190,272,180,18);c.strokeRect(190,272,180,18);c.fillRect(270,60,20,212);c.strokeRect(270,60,20,212);
+  c.beginPath();for(let yy=60;yy<270;yy+=14){const o=(a*2.2)%14;c.moveTo(270,yy+o);c.lineTo(290,yy+o+7)}c.stroke();
+  c.fillStyle=AM;c.fillRect(205,y,150,16);c.strokeRect(205,y,150,16);c.fillStyle=TL;c.fillRect(245,y-34,70,34);
+  wheel(470,175,42,0,a);lab('හැන්ඩලය (භ්‍රමණය)',470,245,14);lab('වේදිකාව ↕',455,30,14,INK,'left');lab('ස්ක්‍රූව',230,30,14)}
+ else{const a=tm*2.5,ty=230-rc(-Math.PI/2-a);c.beginPath();for(let t=0;t<=TAU+.1;t+=.1){const p=P(320,230,rc(t),t+a);t?c.lineTo(...p):c.moveTo(...p)}
+  c.closePath();c.fillStyle=ST;c.fill();c.strokeStyle=INK;c.lineWidth=2;c.stroke();c.fillStyle=INK;c.beginPath();c.arc(320,230,5,0,TAU);c.fill();
+  c.lineWidth=8;c.beginPath();c.moveTo(320,ty);c.lineTo(320,ty-120);c.stroke();c.fillStyle=AM;c.fillRect(290,ty-128,60,10);c.lineWidth=2;c.strokeRect(290,ty-128,60,10);
+  c.beginPath();c.moveTo(320,ty-100);for(let k=0;k<8;k++)c.lineTo(320+(k%2?-16:16),ty-100+k*10);c.stroke();
+  lab('කැම්',440,236,15,INK,'left');lab('ෆොලෝවරය සහ වෑල්වය ↕',380,80,15,TL,'left')}},
+w(dt){if(bad())return;A[0]+=dt*rate(V.N);wheel(170,160,95,0,A[0],'#7d8f9c');lab('ක්‍රෑන්ක් පතුවළ',170,285,14);
+  c.fillStyle='#fff';c.strokeStyle=INK;c.lineWidth=3;c.beginPath();c.arc(470,160,95,0,TAU);c.fill();c.stroke();
+  for(let k=0;k<=8;k++){const a=(135+k*33.75)*Math.PI/180;c.beginPath();c.moveTo(...P(470,160,80,a));c.lineTo(...P(470,160,92,a));c.stroke();lab(k,...P(470,166,64,a),13)}
+  const a=(135+Math.min(V.N,8000)/8000*270)*Math.PI/180;c.strokeStyle=RD;c.lineWidth=4;c.beginPath();c.moveTo(470,160);c.lineTo(...P(470,160,78,a));c.stroke();
+  lab('රෙව් මීටරය (rpm ×1000)',470,285,14);lab(fmt(V.N)+' rpm',470,205,14,TL)},
+b(dt){if(bad())return;const{N1,D1,D2}=V,m=Math.max(D1,D2),r1=Math.max(14,100*D1/m),r2=Math.max(14,100*D2/m);A[0]+=dt*rate(N1);A[1]+=dt*rate(N1*D1/D2);
+  pair(r1,r2,0,0,A[0],A[1],0,'ක්‍රෑන්ක් කප්පිය (D₁)','ෆෑන් කප්පිය (D₂)',N1,N1*D1/D2)},
+ch(dt){if(bad())return;const{N1,T1,T2}=V,m=Math.max(T1,T2),r1=Math.max(16,100*T1/m),r2=Math.max(16,100*T2/m);A[0]+=dt*rate(N1);A[1]+=dt*rate(N1*T1/T2);
+  pair(r1,r2,Math.max(3,Math.round(T1)),Math.max(3,Math.round(T2)),A[0],A[1],1,'ඉදිරි ස්ප්‍රොකට් (T₁)','පසුපස ස්ප්‍රොකට් (T₂)',N1,N1*T1/T2)},
+g(dt){if(bad())return;const{N1,T1,T2}=V,z1=Math.max(3,Math.round(T1)),z2=Math.max(3,Math.round(T2)),k=Math.min(4,130/Math.max(z1,z2)),r1=z1*k,r2=z2*k,d=r1+r2,x1=(W-d)/2,y=140;
+  A[0]+=dt*rate(N1);const a2=-A[0]*z1/z2+Math.PI-.07*TAU/z2;wheel(x1,y,r1,z1,A[0],'#8aa0b0');wheel(x1+d,y,r2,z2,a2,'#b4c3cf');
+  lab('ධාවක ගියරය (T₁)',x1,y+r1+30);lab(fmt(N1)+' rpm',x1,y+r1+50,14,TL);lab('ධාවිත ගියරය (T₂)',x1+d,y+r2+30);lab(fmt(N1*T1/T2)+' rpm',x1+d,y+r2+50,14,TL)},
+cl(dt){gap+=((CL?0:34)-gap)*Math.min(1,dt*8);sp+=((CL?1:0)-sp)*Math.min(1,dt*3);A[0]+=dt*rate(1500);A[1]+=dt*rate(1500)*sp;
+  shaft(50,150,160,A[0],16);shaft(150,206,160,A[0],180,'#8aa0b0');shaft(206+gap,600,160,A[1],16);
+  c.fillStyle=AM;c.strokeStyle=INK;c.lineWidth=2;c.fillRect(206+gap,70,14,180);c.strokeRect(206+gap,70,14,180);
+  c.fillStyle=ST;c.fillRect(220+gap,70,36,180);c.strokeRect(220+gap,70,36,180);
+  c.fillStyle=INK;c.fillRect(340,70,10,180);shaft(206+gap,600,160,A[1],16);
+  for(const yy of[100,220]){c.beginPath();c.moveTo(256+gap,yy);for(let k=1;k<=8;k++){const yy=k|1}//dummy
+c,beginPath();}
+
+function load(s){sb=0;if(c){c.clearRect(0,0,W,u)}cur=s;const o=T[s];document.querySelector('#main').innerHTML=`<h2>${o[1]}</h2><p>${o[2]}</p>`;pf(s)}
+function pf(s) {const de=DET[s];if(de){const m=document.querySelector('#main');m[0]?m.innerHTML+=` <div class=card><p>${de[0]}</p></div>`:0;}}
+window.onload=()=>load('m');
+</script></body></html>
