@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="si">
 <head>
 <meta charset="utf-8">
@@ -70,8 +70,24 @@ section.card{background:var(--surface);border:1.5px solid var(--line);border-rad
 footer{color:var(--muted);font-size:.85rem;text-align:center;margin-top:30px}
 sub{font-size:.7em}
 </style>
+<style>
+#passkey-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  background: #0a1622 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 16px !important;
+  font-family: 'Noto Sans Sinhala','Iskoola Pota','Nirmala UI',system-ui,sans-serif !important;
+}
+body.site-locked > *:not(#passkey-overlay) {
+  display: none !important;
+}
+</style>
 </head>
-<body>
+<body class="site-locked">
 <div id="passkey-overlay" style="position:fixed;inset:0;z-index:999999;background:rgba(10,22,34,0.96);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:16px;font-family:'Noto Sans Sinhala','Iskoola Pota','Nirmala UI',system-ui,sans-serif;">
   <script>try{if(localStorage.getItem('et_site_auth')==='ok'||sessionStorage.getItem('et_site_auth')==='ok'){document.getElementById('passkey-overlay').style.display='none';}}catch(e){}</script>
   <div style="background:#172533;border:2px solid #2ba0b8;box-shadow:0 20px 50px rgba(0,0,0,0.6);border-radius:16px;max-width:440px;width:100%;padding:28px 24px;text-align:center;color:#fff;">
@@ -113,7 +129,7 @@ sub{font-size:.7em}
       if(overlay){
         overlay.style.transition = "opacity 0.3s ease";
         overlay.style.opacity = "0";
-        setTimeout(function(){ overlay.remove(); }, 300);
+        setTimeout(function(){ overlay.remove(); document.body.classList.remove('site-locked'); }, 300);
       }
     } else {
       if(err){
@@ -152,7 +168,7 @@ sub{font-size:.7em}
     } catch(e){}
     var overlay = document.getElementById("passkey-overlay");
     if(auth && overlay){
-      overlay.remove();
+      overlay.remove(); document.body.classList.remove('site-locked');
     } else if(overlay){
       overlay.style.display = "flex";
       setTimeout(function(){
