@@ -72,7 +72,10 @@ sub{font-size:.7em}
 </style>
 </head>
 <body>
-<div style="position:sticky;top:0;z-index:10;padding:8px 16px;background:var(--bg);border-bottom:1px solid var(--line)"><a href="motion.html" style="color:var(--accent);font-weight:700;text-decoration:none">← පාඩම 08 ප්‍රධාන කොටස් වෙත</a></div>
+<div style="position:sticky;top:0;z-index:10;padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+  <a href="motion.html" style="color:var(--accent);font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px">← පාඩම 08 සිමියුලේටර් වෙත</a>
+  <a href="index.html#g12" style="color:var(--muted);font-weight:600;font-size:0.9rem;text-decoration:none">12 වසර පාඩම් වෙත →</a>
+</div>
 <div class="wrap">
 <header>
   <h1>චලනය හා බල සම්ප්‍රේෂණය</h1>
@@ -163,7 +166,7 @@ const SECTIONS = [
     {k:"N1",l:sub("N",1),n:"ධාවක ස්ප්‍රොකට් වේගය",u:"RPM"},
     {k:"N2",l:sub("N",2),n:"අනුගාමික ස්ප්‍රොකට් වේගය",u:"RPM"},
     {k:"T1",l:sub("T",1),n:"ධාවක ස්ප්‍රොකට් දත් ගණන",u:"දත්"},
-    {k:"T2",l:sub("T",2),n:"අනුගාමික ගියරයේ දත් ගණන",u:"දත්"}],
+    {k:"T2",l:sub("T",2),n:"අනුගාමික ස්ප්‍රොකට් දත් ගණන",u:"දත්"}],
   solve:{
     N2:{f:"N₂ = N₁ × T₁ / T₂", c:v=>v.N1*v.T1/v.T2},
     N1:{f:"N₁ = N₂ × T₂ / T₁", c:v=>v.N2*v.T2/v.T1},
@@ -184,26 +187,40 @@ const SECTIONS = [
     N2:{f:"N₂ = N₁ × T₁ / T₂", c:v=>v.N1*v.T1/v.T2},
     N1:{f:"N₁ = N₂ × T₂ / T₁", c:v=>v.N2*v.T2/v.T1},
     T2:{f:"T₂ = N₁ × T₁ / N₂", c:v=>v.N1*v.T1/v.N2},
-    T1:{f:"T₁ = N₂ × T₂ / N₁", c:v=>v.N2*v.T2"�b������W�G&�c��i�y.k�k�x�h^kyNkNx�j�k�u"�N(("�N((�G�f�B�b�C"�b�C������FS��Ч������C�'3F""�F�F�S�#B�hn��i�y.k�k�x�h^kyNkNx�j�k�x>xBxx�(�k�x�xk�x�j�k�"��W�$u"��C�7V#�#��7V#���C�7V#���7V#�"���W�3�.i�y.k�k�x�h^kyNkNx�j�k�xx�(�k�x�xk�x�j�k�F�'VRFRvV"&F��"��f'3������$u""�â$u"#��.i�y.k�k�x�h^kyNkNx�j�k�"�S�"'������'C"�â,�C�7V#���7V#�"��.hNj�x�kxx�(�k�x�xk�x�j�k�"�S�$��'������'C""�â,�C�7V#�#��7V#�"��.kNx�(�k�j�y.j�x�kxx�(�k�x�xk�x�j�k�"�S�$��'����6��fS���u'�c�$u"��N(("��N(("�3�c��b�C"�b�C���C��c�,�N((��N(("/ GR", c:v=>v.t2/v.GR},
+    T1:{f:"T₁ = N₂ × T₂ / N₁", c:v=>v.N2*v.T2/v.N1}},
+  extra:v=>`ගියර් අනුපාතය GR = T₂ / T₁ = ${fmt(v.T2/v.T1)}`,
+  note:[]
+},
+{
+  id:"s4b", title:"4(ආ). ගියර් අනුපාතය සහ ව්‍යාවර්ථය",
+  eq:"GR = τ<sub>2</sub> / τ<sub>1</sub>",
+  keys:"ගියර් අනුපාතය ව්‍යාවර්ථය torque tau gear ratio",
+  vars:[
+    {k:"GR",l:"GR",n:"ගියර් අනුපාතය",u:""},
+    {k:"t1",l:"τ<sub>1</sub>",n:"ආදාන ව්‍යාවර්ථය",u:"N m"},
+    {k:"t2",l:"τ<sub>2</sub>",n:"ප්‍රතිදාන ව්‍යාවර්ථය",u:"N m"}],
+  solve:{
+    GR:{f:"GR = τ₂ / τ₁", c:v=>v.t2/v.t1},
+    t1:{f:"τ₁ = τ₂ / GR", c:v=>v.t2/v.GR},
     t2:{f:"τ₂ = GR × τ₁", c:v=>v.GR*v.t1}},
   note:[]
 },
 {
-  id:"s5", title:"5. ක්වච් පද්ධති (Clutch Systems)",
+  id:"s5", title:"5. ක්ලච් පද්ධති (Clutch Systems)",
   eq:"τ = n μ W R",
-  keys:"ක්වච් clutch ව්‍යාවර්ථය ඝර්ෂණ සංගුණකය ඄ක්ෂීය බලය මධ්‍යන්‍ය ඄රය ඝර්ෂණ පෘෂ්ඨ",
+  keys:"ක්ලච් clutch ව්‍යාවර්ථය ඝර්ෂණ සංගුණකය අක්ෂීය බලය මධ්‍යන්‍ය අරය ඝර්ෂණ පෘෂ්ඨ",
   vars:[
     {k:"t",l:"τ",n:"සම්ප්‍රේෂණය වන ව්‍යාවර්ථය",u:"N m"},
     {k:"n",l:"n",n:"ඝර්ෂණ පෘෂ්ඨ ගණන",u:""},
-    {k:"mu",l:"μ",n:"ඝර්ෂණ වකගුණයය",u:""},
-    {k:"W",l:"W",n:"඄ක්ෂීය තද කිරීමේ බලය",u:"N"},
+    {k:"mu",l:"μ",n:"ඝර්ෂණ සංගුණකය",u:""},
+    {k:"W",l:"W",n:"අක්ෂීය තද කිරීමේ බලය",u:"N"},
     {k:"R",l:"R",n:"මධ්‍යන්‍ය අරය",u:"m"}],
   solve:{
     t:{f:"τ = n × μ × W × R", c:v=>v.n*v.mu*v.W*v.R},
     W:{f:"W = τ / (n × μ × R)", c:v=>v.t/(v.n*v.mu*v.R)},
     mu:{f:"μ = τ / (n × W × R)", c:v=>v.t/(v.n*v.W*v.R)},
-    R{f:"R = τ / (n × μ × W)", c:v=>v.t/(v.n*v.mu*v.W)},
-    n{f:"n = τ / (μ × W × R)", c:v=>v.t/(v.mu*v.W*v.R)}},
+    R:{f:"R = τ / (n × μ × W)", c:v=>v.t/(v.n*v.mu*v.W)},
+    n:{f:"n = τ / (μ × W × R)", c:v=>v.t/(v.mu*v.W*v.R)}},
   note:["අරය R මීටර (m) වලින් ඇතුළත් කරන්න (mm ÷ 1000)."]
 },
 {
