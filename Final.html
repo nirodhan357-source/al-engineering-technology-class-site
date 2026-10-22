@@ -43,10 +43,117 @@ footer b{display:block;color:#fff;font-size:17px;margin-top:6px}
 footer small{display:block;font-size:13px;margin-top:8px;color:#9fb4cc}
 @media(max-width:560px){.hd .in{flex-wrap:wrap;justify-content:center;gap:8px}.hd nav{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}.hd nav a{font-size:13px;padding:4px 8px}.hero img{width:130px;height:130px}}
 
-.lc{position:relative;display:block;background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--line);border-radius:14px;padding:18px 18px 16px;text-decoration:none;color:inherit}
-.lc em{position:absolute;top:10px;right:14px;font-style:normal;font-weight:700;font-size:26px;color:var(--line)}
-.lc h3{margin:0 34px 6px 0;font-size:18px;line-height:1.5}.lc p{margin:0 0 10px;color:var(--mute);font-size:14.5px}
-.lc.on{border-top-color:#15803d;border-color:rgba(21,128,61,.45);transition:transform .15s,box-shadow .15s}.lc.on:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(21,128,61,.3);border-color:#15803d}
+.lc{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-top:4px solid #15803d;
+  border-radius:14px;
+  padding:16px 18px 16px;
+  text-decoration:none;
+  color:inherit;
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+}
+.lc.on{
+  border-top-color:#15803d;
+  border-color:rgba(21,128,61,.45);
+}
+.lc.on:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 28px rgba(21,128,61,.28);
+  border-color:#15803d;
+}
+
+/* Watermark background art placed behind text without affecting legibility */
+.lc-bg-art{
+  position:absolute;
+  right:-10px;
+  bottom:-10px;
+  width:140px;
+  height:140px;
+  opacity:0.12;
+  pointer-events:none;
+  z-index:1;
+  transition:opacity .25s ease,transform .25s ease;
+}
+.lc:hover .lc-bg-art{
+  opacity:0.22;
+  transform:scale(1.08) rotate(-3deg);
+}
+
+/* Header row inside card: thumbnail on left, number & badge on right */
+.lc-head{
+  position:relative;
+  z-index:2;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+.lc-thumb{
+  width:58px;
+  height:58px;
+  flex-shrink:0;
+  border-radius:12px;
+  background:linear-gradient(135deg,rgba(15,30,52,.95),rgba(7,16,28,.98));
+  border:1.5px solid rgba(0,229,255,.3);
+  box-shadow:0 4px 14px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.12);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:5px;
+  transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;
+}
+.lc:hover .lc-thumb{
+  transform:scale(1.06);
+  border-color:#00e5ff;
+  box-shadow:0 6px 18px rgba(0,229,255,.3);
+}
+.lc-thumb svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
+.lc-meta{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:4px;
+}
+.lc em{
+  position:static;
+  font-style:normal;
+  font-weight:800;
+  font-size:26px;
+  line-height:1;
+  color:#22c55e;
+}
+.lc h3{
+  position:relative;
+  z-index:2;
+  margin:0 0 6px 0;
+  font-size:18px;
+  line-height:1.45;
+}
+.lc p{
+  position:relative;
+  z-index:2;
+  margin:0 0 10px;
+  color:var(--mute);
+  font-size:14.5px;
+  line-height:1.5;
+  flex-grow:1;
+}
+.lc .go{
+  position:relative;
+  z-index:2;
+  font-size:13.5px;
+  font-weight:700;
+}
 .lc .tag{font-size:12px;background:var(--line);color:var(--ink);border-radius:99px;padding:1px 12px}
 
 /* LESSON STATUS HIGHLIGHTS & LEGEND */
@@ -58,15 +165,21 @@ footer small{display:block;font-size:13px;margin-top:8px;color:#9fb4cc}
 .legend-swatch.gold-swatch{background:#eab308;box-shadow:0 0 8px rgba(234,179,8,.5)}
 .legend-swatch.blue-swatch{background:#0284c7;box-shadow:0 0 8px rgba(2,132,199,.5)}
 .legend-swatch.green-swatch{background:#15803d;box-shadow:0 0 8px rgba(21,128,61,.6)}
-.status-badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px}
+.status-badge{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700;margin-bottom:0;text-transform:uppercase;letter-spacing:.3px}
 .status-badge.gold{background:rgba(234,179,8,.15);color:#d97706;border:1px solid rgba(234,179,8,.4)}
 .status-badge.progress{background:rgba(2,132,199,.15);color:#0284c7;border:1px solid rgba(2,132,199,.4)}
+
 .lc.lc-gold{border-color:rgba(234,179,8,.45)!important;border-top:5px solid #eab308!important;box-shadow:0 4px 14px rgba(234,179,8,.12)}
 .lc.lc-gold em{color:#eab308!important}
-.lc.lc-gold:hover{border-color:#eab308!important;box-shadow:0 10px 26px rgba(234,179,8,.28)!important;transform:translateY(-3px)}
+.lc.lc-gold .lc-thumb{border-color:rgba(234,179,8,.45)}
+.lc.lc-gold:hover .lc-thumb{border-color:#eab308;box-shadow:0 6px 18px rgba(234,179,8,.32)}
+.lc.lc-gold:hover{border-color:#eab308!important;box-shadow:0 12px 28px rgba(234,179,8,.28)!important;transform:translateY(-3px)}
+
 .lc.lc-progress{border-color:rgba(2,132,199,.45)!important;border-top:5px solid #0284c7!important;box-shadow:0 4px 14px rgba(2,132,199,.12)}
 .lc.lc-progress em{color:#0284c7!important}
-.lc.lc-progress:hover{border-color:#0284c7!important;box-shadow:0 10px 26px rgba(2,132,199,.28)!important;transform:translateY(-3px)}
+.lc.lc-progress .lc-thumb{border-color:rgba(2,132,199,.45)}
+.lc.lc-progress:hover .lc-thumb{border-color:#0284c7;box-shadow:0 6px 18px rgba(2,132,199,.32)}
+.lc.lc-progress:hover{border-color:#0284c7!important;box-shadow:0 12px 28px rgba(2,132,199,.28)!important;transform:translateY(-3px)}
 
 .lessons{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
 .sch{display:inline-block;margin-top:10px;background:var(--gold);color:#1b1b1b;font-weight:700;font-size:18px;padding:5px 22px;border-radius:99px}
@@ -901,52 +1014,326 @@ body.site-locked > *:not(#passkey-overlay) {
     <span class="legend-chip blue"><span class="legend-swatch blue-swatch"></span><strong>නිල් පැහැය (Blue):</strong> සංවර්ධනය වෙමින් පවතින පාඩම් (04)</span>
     <span class="legend-chip green"><span class="legend-swatch green-swatch"></span><strong>සාමාන්‍ය පැහැය (තද කොළ / Deep Green):</strong> විෂය නිර්දේශයේ අනෙකුත් පාඩම්</span>
   </div>
-</div><div class="lessons"><a class="lc on" href="#/lesson/g12-01"><div class="lc-visual">
-      <svg viewBox="0 0 320 110" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="g12_01_bg" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#09182b"/>
-            <stop offset="100%" stop-color="#143455"/>
-          </linearGradient>
-          <linearGradient id="cyan_glow" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#00e5ff"/>
-            <stop offset="100%" stop-color="#00a3ff"/>
-          </linearGradient>
-        </defs>
-        <rect width="320" height="110" fill="url(#g12_01_bg)"/>
-        <!-- Blueprint Grid Pattern -->
-        <g stroke="rgba(0, 229, 255, 0.12)" stroke-width="1">
-          <line x1="20" y1="0" x2="20" y2="110"/>
-          <line x1="70" y1="0" x2="70" y2="110"/>
-          <line x1="120" y1="0" x2="120" y2="110"/>
-          <line x1="170" y1="0" x2="170" y2="110"/>
-          <line x1="220" y1="0" x2="220" y2="110"/>
-          <line x1="270" y1="0" x2="270" y2="110"/>
-          <line x1="0" y1="25" x2="320" y2="25"/>
-          <line x1="0" y1="55" x2="320" y2="55"/>
-          <line x1="0" y1="85" x2="320" y2="85"/>
-        </g>
-        <!-- Gear 1 -->
-        <g transform="translate(70,55)" stroke="#00e5ff" stroke-width="2.5" fill="none">
-          <circle r="30" stroke="rgba(0,229,255,0.4)" stroke-dasharray="4,4"/>
-          <circle r="20" fill="rgba(0, 229, 255, 0.15)"/>
-          <circle r="8" fill="#09182b"/>
-          <rect x="-4" y="-34" width="8" height="8" rx="2" fill="#00e5ff" transform="rotate(0)"/><rect x="-4" y="-34" width="8" height="8" rx="2" fill="#00e5ff" transform="rotate(45)"/><rect x="-4" y="-34" width="8" height="8" rx="2" fill="#00e5ff" transform="rotate(90)"/><rect x="-4" y="-34" width="8" height="8" rx="2" fill="#00e5ff" transform="rotate(135)"/><rect x="-4" y="-34" width="8" height="8" rx="2" fill="#00e5ff" transform="rotate(180)"/><rect x="-4" y="-34" width="8" height="8" rx="2" fill="#00e5ff" transform="rotate(225)"/><rect x="-4" y="-34" width="8" height="8" rx="2" fill="#00e5ff" transform="rotate(270)"/><rect x="-4" y="-34" width="8" height="8" rx="2" fill="#00e5ff" transform="rotate(315)"/>
-        </g>
-        <!-- Small Intermeshing Gear -->
-        <g transform="translate(125,72)" stroke="#ffd700" stroke-width="2" fill="none">
-          <circle r="14" fill="rgba(255,215,0,0.15)"/>
-          <circle r="5" fill="#09182b"/>
-          <rect x="-3" y="-21" width="6" height="6" rx="1.5" fill="#ffd700" transform="rotate(0)"/><rect x="-3" y="-21" width="6" height="6" rx="1.5" fill="#ffd700" transform="rotate(60)"/><rect x="-3" y="-21" width="6" height="6" rx="1.5" fill="#ffd700" transform="rotate(120)"/><rect x="-3" y="-21" width="6" height="6" rx="1.5" fill="#ffd700" transform="rotate(180)"/><rect x="-3" y="-21" width="6" height="6" rx="1.5" fill="#ffd700" transform="rotate(240)"/><rect x="-3" y="-21" width="6" height="6" rx="1.5" fill="#ffd700" transform="rotate(300)"/>
-        </g>
-        <!-- Robotic Arm / Modern Industry 4.0 Nodes -->
-        <path d="M 180 85 L 215 50 L 255 60 L 285 30" fill="none" stroke="url(#cyan_glow)" stroke-width="3" stroke-linecap="round"/>
-        <circle cx="180" cy="85" r="5" fill="#00e5ff"/>
-        <circle cx="215" cy="50" r="4.5" fill="#ffd700"/>
-        <circle cx="255" cy="60" r="4.5" fill="#00e5ff"/>
-        <circle cx="285" cy="30" r="6" fill="#00e5ff" stroke="#fff" stroke-width="2"/>
-        <text x="215" y="98" fill="#a7d0f8" font-size="11" font-family="sans-serif" font-weight="bold" letter-spacing="1">INDUSTRY 4.0</text>
-      </svg></div><div class="lc-content"><em>01</em><h3>ඉංජිනේරු තාක්ෂණවේදයට හඳුන්වාදීම</h3><p>ඉංජිනේරු තාක්ෂණවේදයේ විෂය පථය, තාක්ෂණය හා ඉංජිනේරු කටයුතු අතර සම්බන්ධය සහ මූලික සංකල්ප.</p><span class="go">අනුමාතෘකා හා විෂය කරුණු →</span></div></a><a class="lc on lc-gold" href="#/vehicle"><div class="lc-visual"><span class="status-badge gold">★ සම්පූර්ණ කළ පාඩම</span>
+</div><div class="lessons"><
+      <a class="lc on" href="#/lesson/g12-01">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="110" cy="110" r="80" stroke="#00e5ff" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <circle cx="110" cy="110" r="50" stroke="#00e5ff" stroke-width="1"/>
+      <circle cx="110" cy="110" r="24" stroke="#0284c7" stroke-width="2"/>
+      <line x1="110" y1="10" x2="110" y2="140" stroke="#00e5ff" stroke-width="1.5"/>
+      <line x1="10" y1="110" x2="140" y2="110" stroke="#00e5ff" stroke-width="1.5"/>
+      <circle cx="50" cy="50" r="30" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 3"/>
+      <circle cx="50" cy="50" r="14" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="ඉංජිනේරු තාක්ෂණවේදයට හඳුන්වාදීම">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="t12_01_g" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#00e5ff"/>
+          <stop offset="1" stop-color="#0284c7"/>
+        </linearGradient>
+      </defs>
+      <rect width="64" height="64" rx="8" fill="#0b1e36"/>
+      <path d="M12 0v64M24 0v64M36 0v64M48 0v64M0 12h64M0 24h64M0 36h64M0 48h64" stroke="rgba(0,229,255,0.15)" stroke-width="1"/>
+      <circle cx="32" cy="18" r="4.5" fill="none" stroke="url(#t12_01_g)" stroke-width="2.5"/>
+      <path d="M29 22L16 52M35 22L48 52" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M20 42h24" stroke="url(#t12_01_g)" stroke-width="2" stroke-dasharray="2 2"/>
+      <circle cx="16" cy="52" r="2" fill="#00e5ff"/>
+      <circle cx="48" cy="52" r="2" fill="#f59e0b"/>
+      <circle cx="32" cy="38" r="7" fill="none" stroke="#f59e0b" stroke-width="2"/>
+      <path d="M32 29v3M32 44v3M23 38h3M38 38h3" stroke="#f59e0b" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          
+          <em>01</em>
+        </div>
+      </div>
+      <h3>ඉංජිනේරු තාක්ෂණවේදයට හඳුන්වාදීම</h3>
+      <p>ඉංජිනේරු තාක්ෂණවේදයේ විෂය පථය, තාක්ෂණය හා ඉංජිනේරු කටයුතු අතර සම්බන්ධය සහ මූලික සංකල්ප.</p>
+      <span class="go">අනුමාතෘකා හා විෂය කරුණු →</span>
+    </a>
+
+      <a class="lc on lc-gold" href="#/vehicle">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="100" r="60" stroke="#eab308" stroke-width="2" stroke-dasharray="6 3"/>
+      <circle cx="100" cy="100" r="35" stroke="#eab308" stroke-width="1.5"/>
+      <circle cx="35" cy="45" r="35" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4 2"/>
+      <circle cx="35" cy="45" r="15" stroke="#cbd5e1" stroke-width="1.5"/>
+      <line x1="35" y1="45" x2="100" y2="100" stroke="#94a3b8" stroke-width="2" stroke-dasharray="2 4"/>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="මූලික රථවාහන තාක්ෂණය">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="8" fill="#1c1917"/>
+      <rect x="20" y="10" width="24" height="20" rx="3" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="22" y1="15" x2="42" y2="15" stroke="#475569" stroke-width="1.5"/>
+      <line x1="22" y1="19" x2="42" y2="19" stroke="#475569" stroke-width="1.5"/>
+      <circle cx="32" cy="22" r="3.5" fill="#f59e0b"/>
+      <path d="M29 25L24 46h16l-5-21H29z" fill="#94a3b8" stroke="#cbd5e1" stroke-width="1"/>
+      <circle cx="32" cy="48" r="7" fill="none" stroke="#f59e0b" stroke-width="3"/>
+      <path d="M12 18l5-8-2 6 6-4-5 8 4-2z" fill="#eab308"/>
+      <path d="M52 18l-5-8 2 6-6-4 5 8-4-2z" fill="#eab308"/>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          <span class="status-badge gold">★ සම්පූර්ණ කළ පාඩම</span>
+          <em>02</em>
+        </div>
+      </div>
+      <h3>මූලික රථවාහන තාක්ෂණය</h3>
+      <p>එන්ජින්, ක්ලච් හා ගියර් පෙට්ටිය, ඉන්ධන හා ජ්වලන පද්ධති, තිරිංග, ටයර් සහ බල සම්ප්‍රේෂණය. සජීවී සිමියුලේටර් සමඟ.</p>
+      <span class="go">පාඩම විවෘත කරන්න →</span>
+    </a>
+
+      <a class="lc on" href="#/lesson/g12-03">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 70h30l5-12 10 24 10-24 10 24 5-12h30" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="120" cy="70" r="14" stroke="#facc15" stroke-width="2"/>
+      <line x1="110" y1="60" x2="130" y2="80" stroke="#facc15" stroke-width="2"/>
+      <line x1="110" y1="80" x2="130" y2="60" stroke="#facc15" stroke-width="2"/>
+      <path d="M40 70v40h60" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4 4"/>
+      <line x1="90" y1="110" x2="110" y2="110" stroke="#38bdf8" stroke-width="2"/>
+      <line x1="94" y1="115" x2="106" y2="115" stroke="#38bdf8" stroke-width="1.5"/>
+      <line x1="98" y1="120" x2="102" y2="120" stroke="#38bdf8" stroke-width="1"/>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="මූලික විදුලි තාක්ෂණය හා නිවාස රැහැන ඇදීම">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="8" fill="#0f172a"/>
+      <rect x="15" y="10" width="34" height="46" rx="5" fill="#0369a1" stroke="#38bdf8" stroke-width="1.5"/>
+      <rect x="20" y="15" width="24" height="12" rx="2" fill="#0284c7"/>
+      <text x="32" y="24" fill="#f8fafc" font-size="8" font-family="monospace" font-weight="bold" text-anchor="middle">230 V</text>
+      <circle cx="32" cy="36" r="7" fill="#0f172a" stroke="#f59e0b" stroke-width="1.5"/>
+      <line x1="32" y1="36" x2="35" y2="31" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="24" cy="49" r="2.5" fill="#ef4444"/>
+      <circle cx="40" cy="49" r="2.5" fill="#0f172a" stroke="#64748b" stroke-width="1"/>
+      <path d="M24 51v6l-14-4" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+      <path d="M40 51v6l14-4" stroke="#f8fafc" stroke-width="2" stroke-linecap="round"/>
+      <path d="M50 14l3-7-4 3 4-4" stroke="#facc15" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          
+          <em>03</em>
+        </div>
+      </div>
+      <h3>මූලික විදුලි තාක්ෂණය හා නිවාස රැහැන ඇදීම</h3>
+      <p>විදුලි මූලධර්ම, පරිපථ, ආරක්ෂක උපාංග සහ නිවසක රැහැන් ඇදීමේ ක්‍රම.</p>
+      <span class="go">අනුමාතෘකා හා විෂය කරුණු →</span>
+    </a>
+
+      <a class="lc on lc-progress" href="#/lesson/g12-04">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="10,120 70,20 130,120" stroke="#0284c7" stroke-width="2.5" fill="none"/>
+      <line x1="10" y1="120" x2="130" y2="120" stroke="#0284c7" stroke-width="2"/>
+      <line x1="70" y1="20" x2="70" y2="120" stroke="#38bdf8" stroke-width="2"/>
+      <line x1="40" y1="70" x2="70" y2="120" stroke="#38bdf8" stroke-width="1.5"/>
+      <line x1="100" y1="70" x2="70" y2="120" stroke="#38bdf8" stroke-width="1.5"/>
+      <line x1="40" y1="70" x2="40" y2="120" stroke="#38bdf8" stroke-width="1.5"/>
+      <line x1="100" y1="70" x2="100" y2="120" stroke="#38bdf8" stroke-width="1.5"/>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="මූලික ඉදිකිරීම් තාක්ෂණය">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="8" fill="#1e293b"/>
+      <rect x="10" y="36" width="20" height="9" fill="#dc2626" rx="1"/>
+      <rect x="34" y="36" width="20" height="9" fill="#b91c1c" rx="1"/>
+      <rect x="20" y="47" width="24" height="9" fill="#dc2626" rx="1"/>
+      <line x1="8" y1="36" x2="56" y2="36" stroke="#e2e8f0" stroke-width="1.5"/>
+      <line x1="8" y1="46" x2="56" y2="46" stroke="#e2e8f0" stroke-width="1.5"/>
+      <path d="M44 14l-14 14h18z" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
+      <path d="M44 14l6-6 4 4-6 6" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M12 34L32 12l20 22" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="32" y1="12" x2="32" y2="34" stroke="#f59e0b" stroke-width="2"/>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          <span class="status-badge progress">⚡ සංවර්ධනය වෙමින් පවතී</span>
+          <em>04</em>
+        </div>
+      </div>
+      <h3>මූලික ඉදිකිරීම් තාක්ෂණය</h3>
+      <p>ඉදිකිරීම් ද්‍රව්‍ය, පදනම්, ගඩොල් බැඳුම්, බ්ලොක් ගල්, බිත්ති, වහල, ට්‍රස් හා කොන්ක්‍රීට්. සජීවී ඉදිකිරීම් සිමියුලේටර් සමඟ.</p>
+      <span class="go">අනුමාතෘකා හා සිමියුලේටර් →</span>
+    </a>
+
+      <a class="lc on" href="#/lesson/g12-05">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="100" r="65" stroke="#10b981" stroke-width="2" stroke-dasharray="8 4"/>
+      <circle cx="100" cy="100" r="35" stroke="#10b981" stroke-width="1.5"/>
+      <line x1="45" y1="100" x2="100" y2="100" stroke="#34d399" stroke-width="3"/>
+      <line x1="100" y1="45" x2="100" y2="100" stroke="#34d399" stroke-width="3"/>
+      <line x1="100" y1="100" x2="145" y2="135" stroke="#34d399" stroke-width="3"/>
+      <path d="M10 20l15 15M25 20L10 35M25 35l15 15M40 35L25 50" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="මූලික නිෂ්පාදන තාක්ෂණය හා එකලස් කිරීමේ ශිල්පක්‍රම">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="8" fill="#111827"/>
+      <rect x="8" y="18" width="16" height="28" rx="2" fill="#475569" stroke="#94a3b8" stroke-width="1.5"/>
+      <rect x="24" y="24" width="26" height="16" fill="#cbd5e1" stroke="#f8fafc" stroke-width="1.5"/>
+      <polygon points="44,36 36,36 32,46 44,46" fill="#f59e0b" stroke="#d97706" stroke-width="1.5"/>
+      <circle cx="34" cy="35" r="4" fill="#00e5ff"/>
+      <path d="M34 32l-3-6 7 2-4-7 8 5" stroke="#facc15" stroke-width="2" stroke-linecap="round"/>
+      <path d="M30 25c-4-4-2-8 3-7s4 4 0 7" stroke="#38bdf8" stroke-width="1.5" fill="none"/>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          
+          <em>05</em>
+        </div>
+      </div>
+      <h3>මූලික නිෂ්පාදන තාක්ෂණය හා එකලස් කිරීමේ ශිල්පක්‍රම</h3>
+      <p>සකස් කිරීමේ ක්‍රම, මෙවලම්, වෙල්ඩින් සහ කොටස් එකලස් කිරීමේ ශිල්පක්‍රම.</p>
+      <span class="go">අනුමාතෘකා හා විෂය කරුණු →</span>
+    </a>
+
+      <a class="lc on" href="#/lesson/g12-06">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="20,40 20,80 70,95 70,25" stroke="#06b6d4" stroke-width="2" fill="none"/>
+      <line x1="10" y1="60" x2="135" y2="60" stroke="#06b6d4" stroke-width="1" stroke-dasharray="6 3"/>
+      <circle cx="105" cy="60" r="30" stroke="#06b6d4" stroke-width="1.5"/>
+      <circle cx="105" cy="60" r="14" stroke="#06b6d4" stroke-width="1.5"/>
+      <line x1="105" y1="20" x2="105" y2="100" stroke="#06b6d4" stroke-width="1" stroke-dasharray="6 3"/>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="ඉංජිනේරු ඇඳීම">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="8" fill="#0c1e33"/>
+      <polygon points="32,12 48,20 32,28 16,20" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
+      <polygon points="16,20 32,28 32,46 16,38" fill="#0369a1" stroke="#38bdf8" stroke-width="1.5"/>
+      <polygon points="32,28 48,20 48,38 32,46" fill="#075985" stroke="#38bdf8" stroke-width="1.5"/>
+      <polygon points="10,54 54,54 10,32" fill="rgba(6,182,212,0.3)" stroke="#06b6d4" stroke-width="1.5"/>
+      <polygon points="16,50 40,50 16,38" fill="#0c1e33"/>
+      <rect x="6" y="26" width="5" height="28" rx="1" fill="#f59e0b"/>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          
+          <em>06</em>
+        </div>
+      </div>
+      <h3>ඉංජිනේරු ඇඳීම</h3>
+      <p>ඇඳීම් උපකරණ, ප්‍රක්ෂේපණ, දර්ශන සහ මිනුම් සහිත ඉංජිනේරු රූප සටහන්.</p>
+      <span class="go">අනුමාතෘකා හා විෂය කරුණු →</span>
+    </a>
+
+      <a class="lc on" href="#/lesson/g12-07">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="95" cy="95" r="55" stroke="#14b8a6" stroke-width="2"/>
+      <circle cx="95" cy="95" r="48" stroke="#14b8a6" stroke-width="1" stroke-dasharray="2 4"/>
+      <circle cx="95" cy="95" r="5" fill="#14b8a6"/>
+      <line x1="95" y1="95" x2="120" y2="70" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="95" y="80" fill="#14b8a6" font-size="10" font-family="monospace" text-anchor="middle">0.01mm</text>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="ඒකක හා මිනුම්">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="8" fill="#132729"/>
+      <rect x="8" y="24" width="48" height="12" fill="#334155" stroke="#94a3b8" stroke-width="1.5"/>
+      <path d="M12 24v24c0 3-4 5-4 5V18h8v6z" fill="#cbd5e1" stroke="#94a3b8" stroke-width="1"/>
+      <path d="M30 22v26c0 3-3 5-3 5V18h10v6z" fill="#14b8a6" stroke="#2dd4bf" stroke-width="1"/>
+      <line x1="16" y1="24" x2="16" y2="28" stroke="#f8fafc" stroke-width="1.5"/>
+      <line x1="20" y1="24" x2="20" y2="27" stroke="#f8fafc" stroke-width="1"/>
+      <line x1="24" y1="24" x2="24" y2="27" stroke="#f8fafc" stroke-width="1"/>
+      <line x1="28" y1="24" x2="28" y2="28" stroke="#f8fafc" stroke-width="1.5"/>
+      <line x1="32" y1="24" x2="32" y2="27" stroke="#f8fafc" stroke-width="1"/>
+      <line x1="36" y1="24" x2="36" y2="28" stroke="#f8fafc" stroke-width="1.5"/>
+      <circle cx="21" cy="42" r="5" fill="#f59e0b" stroke="#d97706" stroke-width="1.5"/>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          
+          <em>07</em>
+        </div>
+      </div>
+      <h3>ඒකක හා මිනුම්</h3>
+      <p>SI ඒකක, මිනුම් උපකරණ, නිරවද්‍යතාව සහ මිනුම් ගැනීමේ නිවැරදි ක්‍රම.</p>
+      <span class="go">අනුමාතෘකා හා විෂය කරුණු →</span>
+    </a>
+
+      <a class="lc on lc-gold" href="#/lesson/g12-08">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="45" stroke="#eab308" stroke-width="2.5" stroke-dasharray="10 4"/>
+      <circle cx="50" cy="50" r="22" stroke="#eab308" stroke-width="1.5"/>
+      <circle cx="115" cy="115" r="40" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="8 4"/>
+      <circle cx="115" cy="115" r="18" stroke="#f59e0b" stroke-width="1.5"/>
+      <line x1="50" y1="50" x2="115" y2="115" stroke="#f8fafc" stroke-width="1" stroke-dasharray="3 3"/>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="චලන හා බල සම්ප්‍රේෂණය">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="8" fill="#1c1917"/>
+      <circle cx="20" cy="32" r="14" fill="#334155" stroke="#eab308" stroke-width="2"/>
+      <circle cx="20" cy="32" r="5" fill="#eab308"/>
+      <circle cx="46" cy="32" r="9" fill="#334155" stroke="#f59e0b" stroke-width="2"/>
+      <circle cx="46" cy="32" r="3.5" fill="#f59e0b"/>
+      <path d="M20 18H46M20 46H46" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M12 28a12 12 0 0 1 8-10" stroke="#00e5ff" stroke-width="2" stroke-linecap="round"/>
+      <path d="M48 24a8 8 0 0 1 6 8" stroke="#00e5ff" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          <span class="status-badge gold">★ සම්පූර්ණ කළ පාඩම</span>
+          <em>08</em>
+        </div>
+      </div>
+      <h3>චලන හා බල සම්ප්‍රේෂණය</h3>
+      <p>චලන වර්ග සහ පටි, දම්වැල්, ගියර් වැනි යාන්ත්‍රික බල සම්ප්‍රේෂණ ක්‍රම. සජීවී සිමියුලේටර් සහ සූත්‍ර ගණකය සමඟ.</p>
+      <span class="go">මොඩියුල හා සිමියුලේටර් තෝරන්න →</span>
+    </a>
+
+      <a class="lc on" href="#/lesson/g12-09">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="90,15 135,95 45,95" stroke="#eab308" stroke-width="3" stroke-linejoin="round" fill="none"/>
+      <line x1="90" y1="45" x2="90" y2="70" stroke="#eab308" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="90" cy="82" r="3" fill="#eab308"/>
+      <path d="M20 70c0 30 35 55 55 60 20-5 55-30 55-60V35L75 20 20 35v35z" stroke="#22c55e" stroke-width="2" fill="none" stroke-dasharray="6 3"/>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="තාක්ෂණය සඳහා සෞඛ්‍ය හා ආරක්ෂාව">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="8" fill="#1c1917"/>
+      <path d="M14 36c0-10 8-18 18-18s18 8 18 18H14z" fill="#facc15" stroke="#eab308" stroke-width="1.5"/>
+      <path d="M10 36h44c2 0 3 1.5 3 3H7c0-1.5 1-3 3-3z" fill="#eab308"/>
+      <path d="M30 18v18M34 18v18" stroke="#ca8a04" stroke-width="1"/>
+      <rect x="18" y="38" width="12" height="9" rx="3" fill="#0284c7" stroke="#38bdf8" stroke-width="1"/>
+      <rect x="34" y="38" width="12" height="9" rx="3" fill="#0284c7" stroke="#38bdf8" stroke-width="1"/>
+      <line x1="30" y1="42" x2="34" y2="42" stroke="#38bdf8" stroke-width="2"/>
+      <circle cx="48" cy="18" r="9" fill="#15803d" stroke="#f8fafc" stroke-width="1.5"/>
+      <path d="M48 13v10M43 18h10" stroke="#f8fafc" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          
+          <em>09</em>
+        </div>
+      </div>
+      <h3>තාක්ෂණය සඳහා සෞඛ්‍ය හා ආරක්ෂාව</h3>
+      <p>වැඩ ස්ථානයේ අනතුරු, ආරක්ෂිත උපකරණ, ප්‍රථමාධාර සහ ආරක්ෂිත වැඩ පුරුදු.</p>
+      <span class="go">අනුමාතෘකා හා විෂය කරුණු →</span>
+    </a>
+    </div><div class="lc-content"><em>01</em><h3>ඉංජිනේරු තාක්ෂණවේදයට හඳුන්වාදීම</h3><p>ඉංජිනේරු තාක්ෂණවේදයේ විෂය පථය, තාක්ෂණය හා ඉංජිනේරු කටයුතු අතර සම්බන්ධය සහ මූලික සංකල්ප.</p><span class="go">අනුමාතෘකා හා විෂය කරුණු →</span></div></a><a class="lc on lc-gold" href="#/vehicle"><div class="lc-visual"><span class="status-badge gold">★ සම්පූර්ණ කළ පාඩම</span>
       <svg viewBox="0 0 320 110" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="g12_02_bg" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1212,39 +1599,304 @@ body.site-locked > *:not(#passkey-overlay) {
         </g>
         <text x="180" y="98" fill="#4ade80" font-size="11" font-weight="bold" font-family="sans-serif">SAFETY FIRST</text>
       </svg></div><div class="lc-content"><em>09</em><h3>තාක්ෂණය සඳහා සෞඛ්‍ය හා ආරක්ෂාව</h3><p>වැඩ ස්ථානයේ අනතුරු, ආරක්ෂිත උපකරණ, ප්‍රථමාධාර සහ ආරක්ෂිත වැඩ පුරුදු.</p><span class="go">අනුමාතෘකා හා විෂය කරුණු →</span></div></a></div></section>
-<section id="g13"><h2>13 වසර පාඩම් මාලාව</h2><p class="sub">පාඩමක් සක්‍රිය නම් එය ක්ලික් කර විවෘත කරන්න.</p><div class="lessons"><a class="lc on" href="#/lesson/g13-01"><div class="lc-visual">
-      <svg viewBox="0 0 320 110" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="g13_01_bg" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#121e33"/>
-            <stop offset="100%" stop-color="#1d3052"/>
-          </linearGradient>
-        </defs>
-        <rect width="320" height="110" fill="url(#g13_01_bg)"/>
-        <!-- ISO Ribbon / Quality Badge -->
-        <g transform="translate(75,50)">
-          <!-- Ribbon tails -->
-          <polygon points="-12,15 -25,45 -8,38 0,45" fill="#f59e0b"/>
-          <polygon points="12,15 25,45 8,38 0,45" fill="#d97706"/>
-          <!-- Golden Medal -->
-          <circle r="26" fill="#ffd700" stroke="#b45309" stroke-width="2.5"/>
-          <circle r="20" fill="#fff" stroke="#ffd700" stroke-width="1.5"/>
-          <text x="-15" y="4" fill="#b45309" font-size="11" font-family="sans-serif" font-weight="900">ISO</text>
-        </g>
-        <!-- Standard Specification Checklist Clipboard -->
-        <g transform="translate(160,20)">
-          <rect width="55" height="70" rx="4" fill="#f8fafc" stroke="#475569" stroke-width="2"/>
-          <rect x="18" y="-5" width="20" height="8" rx="2" fill="#334155"/>
-          <!-- Checkmarks -->
-          <polyline points="10,22 15,27 25,18" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="30" y1="22" x2="48" y2="22" stroke="#94a3b8" stroke-width="2"/>
-          <polyline points="10,40 15,45 25,36" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="30" y1="40" x2="48" y2="40" stroke="#94a3b8" stroke-width="2"/>
-          <polyline points="10,58 15,63 25,54" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="30" y1="58" x2="48" y2="58" stroke="#94a3b8" stroke-width="2"/>
-        </g>
-        <text x="230" y="65" fill="#93c5fd" font-size="12" font-weight="bold" font-family="sans-serif">SLS / ISO<tspan x="230" y="82" font-size="10" fill="#60a5fa">QUALITY</tspan></text>
-      </svg></div><div class="lc-content"><em>01</em><h3>ඉංජිනේරු ප්‍රමිති, පිරිවිතර හා තත්ත්ව සහතිකකරණය</h3><p>ඉංජිනේරු සම්මත, ජාතික හා ජාත්‍යන්තර ප්‍රමිති, සංග්‍රහ සහ තත්ත්ව කළමනාකරණය.</p><span class="go">අනුමාතෘකා හා විෂය කරුණු →</span></div></a><a class="lc on" href="#/lesson/g13-02"><div class="lc-visual">
+<section id="g13"><h2>13 වසර පාඩම් මාලාව</h2><p class="sub">පාඩමක් සක්‍රිය නම් එය ක්ලික් කර විවෘත කරන්න.</p><div class="lessons"><
+      <a class="lc on" href="#/lesson/g13-01">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="95" cy="95" r="55" stroke="#22c55e" stroke-width="2"/>
+      <circle cx="95" cy="95" r="45" stroke="#4ade80" stroke-width="1.5" stroke-dasharray="6 3"/>
+      <text x="95" y="90" fill="#22c55e" font-size="14" font-weight="bold" font-family="sans-serif" text-anchor="middle">ISO / SLS</text>
+      <text x="95" y="106" fill="#4ade80" font-size="9" font-family="sans-serif" text-anchor="middle">CERTIFIED</text>
+      <line x1="15" y1="30" x2="65" y2="30" stroke="#22c55e" stroke-width="3"/>
+      <line x1="15" y1="45" x2="55" y2="45" stroke="#22c55e" stroke-width="3"/>
+      <line x1="15" y1="60" x2="60" y2="60" stroke="#22c55e" stroke-width="3"/>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="ඉංජිනේරු ප්‍රමිති, පිරිවිතර හා තත්ත්ව සහතිකකරණය">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="8" fill="#0f291e"/>
+      <circle cx="32" cy="28" r="16" fill="#15803d" stroke="#4ade80" stroke-width="2"/>
+      <circle cx="32" cy="28" r="12" stroke="#facc15" stroke-width="1.5" stroke-dasharray="3 2"/>
+      <polygon points="32,18 35,24 41,25 36,29 38,36 32,32 26,36 28,29 23,25 29,24" fill="#facc15"/>
+      <path d="M25 40l-5 18 10-4 4-14" fill="#16a34a" stroke="#22c55e" stroke-width="1"/>
+      <path d="M39 40l5 18-10-4-4-14" fill="#15803d" stroke="#22c55e" stroke-width="1"/>
+      <circle cx="48" cy="46" r="8" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
+      <path d="M44 46l3 3 6-6" stroke="#f8fafc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          
+          <em>01</em>
+        </div>
+      </div>
+      <h3>ඉංජිනේරු ප්‍රමිති, පිරිවිතර හා තත්ත්ව සහතිකකරණය</h3>
+      <p>ඉංජිනේරු සම්මත, ජාතික හා ජාත්‍යන්තර ප්‍රමිති, සංග්‍රහ සහ තත්ත්ව කළමනාකරණය.</p>
+      <span class="go">අනුමාතෘකා හා විෂය කරුණු →</span>
+    </a>
+
+      <a class="lc on" href="#/lesson/g13-02">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 100c25-40 45 40 70 0s45 40 50 0" stroke="#00e5ff" stroke-width="2.5" fill="none"/>
+      <path d="M10 100c25 40 45-40 70 0s45-40 50 0" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4 2" fill="none"/>
+      <path d="M105 20L85 135h40L105 20z" stroke="#0284c7" stroke-width="2" fill="none"/>
+      <line x1="75" y1="45" x2="135" y2="45" stroke="#0284c7" stroke-width="2.5"/>
+      <line x1="70" y1="70" x2="140" y2="70" stroke="#0284c7" stroke-width="2.5"/>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="විදුලි ජවය නිෂ්පාදනය, සම්ප්‍රේෂණය හා විදුලි යන්ත්‍ර">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="8" fill="#0c1e33"/>
+      <path d="M32 8L20 54h24L32 8z" stroke="#38bdf8" stroke-width="1.5" fill="none"/>
+      <line x1="14" y1="20" x2="50" y2="20" stroke="#00e5ff" stroke-width="2"/>
+      <line x1="10" y1="30" x2="54" y2="30" stroke="#00e5ff" stroke-width="2"/>
+      <line x1="20" y1="30" x2="44" y2="42" stroke="#38bdf8" stroke-width="1"/>
+      <line x1="44" y1="30" x2="20" y2="42" stroke="#38bdf8" stroke-width="1"/>
+      <path d="M10 30c6 8 18 10 22 10s16-2 22-10" stroke="#94a3b8" stroke-width="1" stroke-dasharray="2 2"/>
+      <path d="M46 10l-6 10h8l-8 14 3-8h-5l8-16z" fill="#facc15"/>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          
+          <em>02</em>
+        </div>
+      </div>
+      <h3>විදුලි ජවය නිෂ්පාදනය, සම්ප්‍රේෂණය හා විදුලි යන්ත්‍ර</h3>
+      <p>විදුලි මෝටර්, ජනක, ට්‍රාන්ස්ෆෝමර් සහ විදුලි බල සම්ප්‍රේෂණ හා බෙදාහැරීමේ පද්ධති.</p>
+      <span class="go">අනුමාතෘකා හා විෂය කරුණු →</span>
+    </a>
+
+      <a class="lc on" href="#/lesson/g13-03">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 30h40l20 20h30l20-20h10" stroke="#38bdf8" stroke-width="2"/>
+      <path d="M10 60h30l25 25h40l15-15h10" stroke="#38bdf8" stroke-width="2"/>
+      <path d="M10 90h50l15-15h40" stroke="#38bdf8" stroke-width="2"/>
+      <circle cx="50" cy="30" r="3" fill="#facc15"/>
+      <circle cx="70" cy="50" r="3" fill="#facc15"/>
+      <circle cx="100" cy="50" r="3" fill="#facc15"/>
+      <circle cx="40" cy="60" r="3" fill="#facc15"/>
+      <circle cx="95" cy="85" r="3" fill="#facc15"/>
+      <circle cx="45" cy="115" r="16" stroke="#0284c7" stroke-width="1.5"/>
+      <line x1="37" y1="107" x2="37" y2="123" stroke="#f8fafc" stroke-width="2"/>
+      <line x1="25" y1="115" x2="37" y2="115" stroke="#f8fafc" stroke-width="2"/>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="මූලික ඉලෙක්ට්‍රොනික තාක්ෂණය හා ප්‍රායෝගික භාවිත">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="8" fill="#082032"/>
+      <rect x="18" y="16" width="28" height="32" rx="3" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5"/>
+      <path d="M28 16a4 4 0 0 0 8 0" stroke="#38bdf8" stroke-width="1.5" fill="#082032"/>
+      <circle cx="24" cy="22" r="1.5" fill="#f59e0b"/>
+      <text x="32" y="34" fill="#94a3b8" font-size="7" font-family="monospace" font-weight="bold" text-anchor="middle">555 IC</text>
+      <line x1="12" y1="22" x2="18" y2="22" stroke="#facc15" stroke-width="2"/>
+      <line x1="12" y1="28" x2="18" y2="28" stroke="#facc15" stroke-width="2"/>
+      <line x1="12" y1="34" x2="18" y2="34" stroke="#facc15" stroke-width="2"/>
+      <line x1="12" y1="40" x2="18" y2="40" stroke="#facc15" stroke-width="2"/>
+      <line x1="46" y1="22" x2="52" y2="22" stroke="#facc15" stroke-width="2"/>
+      <line x1="46" y1="28" x2="52" y2="28" stroke="#facc15" stroke-width="2"/>
+      <line x1="46" y1="34" x2="52" y2="34" stroke="#facc15" stroke-width="2"/>
+      <line x1="46" y1="40" x2="52" y2="40" stroke="#facc15" stroke-width="2"/>
+      <circle cx="50" cy="14" r="4" fill="#00e5ff"/>
+      <path d="M50 8l3-3M54 11l4-2" stroke="#00e5ff" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          
+          <em>03</em>
+        </div>
+      </div>
+      <h3>මූලික ඉලෙක්ට්‍රොනික තාක්ෂණය හා ප්‍රායෝගික භාවිත</h3>
+      <p>අර්ධ සන්නායක උපාංග, ඉලෙක්ට්‍රොනික පරිපථ, සංවේදක සහ ප්‍රායෝගික භාවිතයන්.</p>
+      <span class="go">අනුමාතෘකා හා විෂය කරුණු →</span>
+    </a>
+
+      <a class="lc on" href="#/lesson/g13-04">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="95" r="50" stroke="#0284c7" stroke-width="2.5"/>
+      <circle cx="100" cy="95" r="42" stroke="#38bdf8" stroke-width="1" stroke-dasharray="3 3"/>
+      <path d="M70 115a40 40 0 1 1 60 0" stroke="#0284c7" stroke-width="2" fill="none"/>
+      <line x1="100" y1="95" x2="125" y2="70" stroke="#ef4444" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="100" cy="95" r="5" fill="#0284c7"/>
+      <path d="M10 20h60v50h50" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="70" cy="70" r="10" stroke="#38bdf8" stroke-width="2"/>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="තරල භාවිත යන්ත්‍ර හා පීඩන පද්ධති">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="8" fill="#0c2338"/>
+      <rect x="8" y="24" width="30" height="16" rx="2" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
+      <line x1="38" y1="32" x2="56" y2="32" stroke="#f8fafc" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="56" cy="32" r="3" fill="#94a3b8"/>
+      <circle cx="23" cy="15" r="9" fill="#f8fafc" stroke="#0284c7" stroke-width="1.5"/>
+      <line x1="23" y1="15" x2="28" y2="11" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="23" y1="24" x2="23" y2="20" stroke="#0284c7" stroke-width="2"/>
+      <path d="M12 48h22l-4-4m4 4l-4 4" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M42 48h14" stroke="#00e5ff" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          
+          <em>04</em>
+        </div>
+      </div>
+      <h3>තරල භාවිත යන්ත්‍ර හා පීඩන පද්ධති</h3>
+      <p>ජල පොම්ප, ටර්බයින්, වායුමය හා ද්‍රවමය පාලන පද්ධති.</p>
+      <span class="go">අනුමාතෘකා හා විෂය කරුණු →</span>
+    </a>
+
+      <a class="lc on" href="#/lesson/g13-05">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="95" cy="95" r="50" stroke="#10b981" stroke-width="2"/>
+      <circle cx="95" cy="95" r="30" stroke="#10b981" stroke-width="1.5"/>
+      <line x1="95" y1="35" x2="95" y2="155" stroke="#10b981" stroke-width="1.5"/>
+      <line x1="35" y1="95" x2="155" y2="95" stroke="#10b981" stroke-width="1.5"/>
+      <circle cx="95" cy="95" r="2" fill="#10b981"/>
+      <path d="M15 30c30-10 60 10 90-5" stroke="#34d399" stroke-width="1.5" fill="none" stroke-dasharray="4 2"/>
+      <path d="M15 50c30-10 50 15 80-2" stroke="#34d399" stroke-width="1.5" fill="none" stroke-dasharray="4 2"/>
+      <path d="M15 70c20-5 40 10 65-2" stroke="#34d399" stroke-width="1.5" fill="none" stroke-dasharray="4 2"/>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="බිම් මැනීම සහ මට්ටම් ගැනීම පිළිබඳ මූලධර්ම">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="8" fill="#0d2818"/>
+      <rect x="18" y="16" width="28" height="8" rx="2" fill="#eab308" stroke="#ca8a04" stroke-width="1"/>
+      <rect x="42" y="14" width="6" height="12" rx="1" fill="#15803d"/>
+      <circle cx="45" cy="20" r="2.5" fill="#00e5ff"/>
+      <circle cx="32" cy="20" r="6" stroke="#ca8a04" stroke-width="1.5" fill="#facc15"/>
+      <rect x="25" y="27" width="14" height="5" rx="1" fill="#475569"/>
+      <line x1="28" y1="32" x2="14" y2="54" stroke="#e2e8f0" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="32" y1="32" x2="32" y2="54" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round"/>
+      <line x1="36" y1="32" x2="50" y2="54" stroke="#e2e8f0" stroke-width="2.5" stroke-linecap="round"/>
+      <rect x="54" y="18" width="4" height="36" fill="#f8fafc" stroke="#dc2626" stroke-width="1"/>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          
+          <em>05</em>
+        </div>
+      </div>
+      <h3>බිම් මැනීම සහ මට්ටම් ගැනීම පිළිබඳ මූලධර්ම</h3>
+      <p>මිනුම් උපකරණ භාවිතය, බිම් මැනුම් ක්‍රම, මට්ටම් ගැනීම සහ සමෝච්ච රේඛා සැලසුම්.</p>
+      <span class="go">අනුමාතෘකා හා විෂය කරුණු →</span>
+    </a>
+
+      <a class="lc on" href="#/lesson/g13-06">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15 25h45v45h45v45" stroke="#06b6d4" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <circle cx="60" cy="70" r="10" stroke="#00e5ff" stroke-width="2"/>
+      <circle cx="105" cy="115" r="28" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <circle cx="105" cy="115" r="16" stroke="#38bdf8" stroke-width="1.5"/>
+      <circle cx="105" cy="115" r="5" fill="#00e5ff"/>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="ගෘහස්ථ ජල සම්පාදනය හා කසල කළමනාකරණය">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="8" fill="#082832"/>
+      <rect x="18" y="10" width="28" height="20" rx="3" fill="#0284c7" stroke="#38bdf8" stroke-width="1.5"/>
+      <line x1="18" y1="16" x2="46" y2="16" stroke="#0369a1" stroke-width="1.5"/>
+      <line x1="18" y1="24" x2="46" y2="24" stroke="#0369a1" stroke-width="1.5"/>
+      <path d="M38 30v14h12v10" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <circle cx="38" cy="38" r="4" fill="#f59e0b" stroke="#d97706" stroke-width="1.5"/>
+      <path d="M50 54c0 3-2 5-5 5s-5-2-5-5c0-3 5-8 5-8s5 5 5 8z" fill="#00e5ff"/>
+      <rect x="12" y="40" width="14" height="16" rx="2" fill="#15803d" stroke="#4ade80" stroke-width="1"/>
+      <line x1="10" y1="40" x2="28" y2="40" stroke="#4ade80" stroke-width="1.5"/>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          
+          <em>06</em>
+        </div>
+      </div>
+      <h3>ගෘහස්ථ ජල සම්පාදනය හා කසල කළමනාකරණය</h3>
+      <p>ගෘහස්ථ ජල සැපයුම, නල එළීම, සනීපාරක්ෂක උපකරණ, අපජල හා කසල බැහැර කිරීම.</p>
+      <span class="go">අනුමාතෘකා හා විෂය කරුණු →</span>
+    </a>
+
+      <a class="lc on" href="#/lesson/g13-07">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="15" y="20" width="110" height="100" stroke="#8b5cf6" stroke-width="2" rx="4" fill="none"/>
+      <line x1="15" y1="45" x2="125" y2="45" stroke="#8b5cf6" stroke-width="2"/>
+      <line x1="15" y1="70" x2="125" y2="70" stroke="#8b5cf6" stroke-width="1.5"/>
+      <line x1="15" y1="95" x2="125" y2="95" stroke="#8b5cf6" stroke-width="1.5"/>
+      <line x1="45" y1="20" x2="45" y2="120" stroke="#8b5cf6" stroke-width="1.5"/>
+      <line x1="85" y1="20" x2="85" y2="120" stroke="#8b5cf6" stroke-width="1.5"/>
+      <text x="105" y="40" fill="#a78bfa" font-size="12" font-family="monospace">Rs.</text>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="ගොඩනැගිලි සැලසුම් අනුව ප්‍රමාණ බිල්පත් (BOQ) හා පිරිවැය ගණනය">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="8" fill="#1e1b4b"/>
+      <rect x="10" y="12" width="28" height="40" rx="2" fill="#1e293b" stroke="#818cf8" stroke-width="1.5"/>
+      <path d="M14 18h20v26H14z" stroke="#a5b4fc" stroke-width="1.5" fill="none"/>
+      <line x1="14" y1="28" x2="26" y2="28" stroke="#a5b4fc" stroke-width="1.5"/>
+      <line x1="26" y1="28" x2="26" y2="44" stroke="#a5b4fc" stroke-width="1.5"/>
+      <rect x="34" y="22" width="22" height="30" rx="3" fill="#312e81" stroke="#c084fc" stroke-width="1.5"/>
+      <rect x="38" y="26" width="14" height="6" rx="1" fill="#4338ca"/>
+      <circle cx="41" cy="37" r="1.5" fill="#e0e7ff"/>
+      <circle cx="45" cy="37" r="1.5" fill="#e0e7ff"/>
+      <circle cx="49" cy="37" r="1.5" fill="#f59e0b"/>
+      <circle cx="41" cy="43" r="1.5" fill="#e0e7ff"/>
+      <circle cx="45" cy="43" r="1.5" fill="#e0e7ff"/>
+      <circle cx="49" cy="43" r="1.5" fill="#10b981"/>
+      <text x="45" y="17" fill="#facc15" font-size="12" font-weight="bold" font-family="serif" text-anchor="middle">∑</text>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          
+          <em>07</em>
+        </div>
+      </div>
+      <h3>ගොඩනැගිලි සැලසුම් අනුව ප්‍රමාණ බිල්පත් (BOQ) හා පිරිවැය ගණනය</h3>
+      <p>සම්මත මිනුම් ක්‍රම (SLS 573), ද්‍රව්‍ය හා ශ්‍රම ඇස්තමේන්තු, ප්‍රමාණ බිල්පත් සැකසීම.</p>
+      <span class="go">අනුමාතෘකා හා විෂය කරුණු →</span>
+    </a>
+
+      <a class="lc on" href="#/lesson/g13-08">
+      <div class="lc-bg-art" aria-hidden="true">
+        <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="100" r="55" stroke="#eab308" stroke-width="2"/>
+      <circle cx="100" cy="100" r="38" stroke="#f59e0b" stroke-width="1.5"/>
+      <circle cx="100" cy="100" r="20" stroke="#ef4444" stroke-width="2"/>
+      <circle cx="100" cy="100" r="6" fill="#ef4444"/>
+      <path d="M15 110C45 105 70 85 125 25" stroke="#22c55e" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <polygon points="125,25 112,28 122,38" fill="#22c55e"/>
+    </svg>
+      </div>
+      <div class="lc-head">
+        <div class="lc-thumb" title="නිෂ්පාදන හා ව්‍යාපාර සංවර්ධන ව්‍යවසායකත්ව කුසලතා">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="8" fill="#1f1d11"/>
+      <rect x="12" y="38" width="8" height="16" rx="1" fill="#eab308"/>
+      <rect x="23" y="28" width="8" height="26" rx="1" fill="#f59e0b"/>
+      <rect x="34" y="18" width="8" height="36" rx="1" fill="#22c55e"/>
+      <path d="M12 36L26 24l10 8 18-18" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M44 14h10v10" stroke="#4ade80" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="50" cy="46" r="8" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+      <circle cx="50" cy="46" r="3" fill="#ef4444"/>
+    </svg>
+        </div>
+        <div class="lc-meta">
+          
+          <em>08</em>
+        </div>
+      </div>
+      <h3>නිෂ්පාදන හා ව්‍යාපාර සංවර්ධන ව්‍යවසායකත්ව කුසලතා</h3>
+      <p>ව්‍යවසායකත්වය, ව්‍යාපාර සැලසුම් සකස් කිරීම, මූල්‍ය හා කාර්යමණ්ඩල කළමනාකරණය.</p>
+      <span class="go">අනුමාතෘකා හා විෂය කරුණු →</span>
+    </a>
+    </div><div class="lc-content"><em>01</em><h3>ඉංජිනේරු ප්‍රමිති, පිරිවිතර හා තත්ත්ව සහතිකකරණය</h3><p>ඉංජිනේරු සම්මත, ජාතික හා ජාත්‍යන්තර ප්‍රමිති, සංග්‍රහ සහ තත්ත්ව කළමනාකරණය.</p><span class="go">අනුමාතෘකා හා විෂය කරුණු →</span></div></a><a class="lc on" href="#/lesson/g13-02"><div class="lc-visual">
       <svg viewBox="0 0 320 110" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="g13_02_bg" x1="0%" y1="0%" x2="100%" y2="100%">
