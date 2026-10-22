@@ -70,125 +70,16 @@ section.card{background:var(--surface);border:1.5px solid var(--line);border-rad
 footer{color:var(--muted);font-size:.85rem;text-align:center;margin-top:30px}
 sub{font-size:.7em}
 </style>
-<style>
-#passkey-overlay {
-  position: fixed !important;
-  inset: 0 !important;
-  z-index: 2147483647 !important;
-  background: #0a1622 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 16px !important;
-  font-family: 'Noto Sans Sinhala','Iskoola Pota','Nirmala UI',system-ui,sans-serif !important;
-}
-body.site-locked > *:not(#passkey-overlay) {
-  display: none !important;
-}
-</style>
 </head>
-<body class="site-locked">
-<div id="passkey-overlay" style="position:fixed;inset:0;z-index:999999;background:rgba(10,22,34,0.96);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:16px;font-family:'Noto Sans Sinhala','Iskoola Pota','Nirmala UI',system-ui,sans-serif;">
-  <script>try{if(window.parent&&window.parent!==window){var o=document.getElementById('passkey-overlay');if(o)o.remove();document.body.classList.remove('site-locked');}else{localStorage.removeItem('et_site_auth');sessionStorage.removeItem('et_site_auth');}}catch(e){}</script>
-  <div style="background:#172533;border:2px solid #2ba0b8;box-shadow:0 20px 50px rgba(0,0,0,0.6);border-radius:16px;max-width:440px;width:100%;padding:28px 24px;text-align:center;color:#fff;">
-    <div style="font-size:2.8rem;margin-bottom:12px;">🔐</div>
-    <h2 style="margin:0 0 8px;font-size:1.35rem;color:#f0f6fc;font-weight:700;">ආරක්ෂිත පිවිසුම (Security Access)</h2>
-    <p style="margin:0 0 16px;color:#9fb0bc;font-size:0.92rem;line-height:1.5;">උසස් පෙළ ඉංජිනේරු තාක්ෂණවේදය පාඩම් මාලාව සඳහා පිවිසීමට Passkey එක ඇතුළත් කරන්න.</p>
-    <form id="passkey-form" onsubmit="event.preventDefault(); window.verifySitePasskey();" style="display:flex;flex-direction:column;gap:12px;">
-      <div style="position:relative;width:100%;">
-        <input id="site-passkey-input" type="password" placeholder="Passkey ඇතුළත් කරන්න" autocomplete="current-password" required style="width:100%;padding:12px 42px 12px 14px;border-radius:8px;border:1.5px solid #2e4357;background:#0d1822;color:#fff;font-size:1.05rem;letter-spacing:1px;outline:none;box-sizing:border-box;">
-        <button type="button" onclick="window.togglePasskeyVis()" id="passkey-toggle-btn" style="position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:#9fb0bc;cursor:pointer;font-size:1.1rem;padding:4px;" title="Show/Hide">👁️</button>
-      </div>
-      <div id="passkey-error" style="display:none;color:#ff6b6b;background:rgba(255,107,107,0.12);border:1px solid rgba(255,107,107,0.3);padding:8px 12px;border-radius:6px;font-size:0.85rem;font-weight:600;">
-        ❌ වැරදි Passkey එකකි! කරුණාකර නැවත උත්සාහ කරන්න.
-      </div>
-      <button type="submit" id="passkey-submit-btn" style="padding:12px;background:#0b7a75;color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;transition:background 0.2s;">
-        පිවිසෙන්න (Unlock Site) →
-      </button>
-    </form>
-    <div style="margin-top:20px;padding-top:14px;border-top:1px solid #2e4357;font-size:0.78rem;color:#7c8e9c;line-height:1.4;">
-      Engineering Technology Educational Portal<br>
-      K.A.NIRODHA Maduranga · Karagaskada Central College
-    </div>
+<body>
+<div style="position:sticky;top:0;z-index:20;padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-family:'Noto Sans Sinhala','Iskoola Pota','Nirmala UI',system-ui,sans-serif;">
+  <a href="motion.html" style="color:var(--accent);font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px">← ප්‍රධාන පාඩම් මොඩියුල වෙත (Back to Lesson 08 Hub)</a>
+  <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+    <a href="motion-power.html" style="background:var(--accent);color:#fff;padding:6px 14px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.9rem;display:inline-flex;align-items:center;gap:6px">⚙️ සිමියුලේෂන් පාඩම වෙත →</a>
+    <a href="index.html#g12" onclick="if(window.location.protocol==='file:'&&!window.location.href.includes('index.html')){this.href='Final.html#g12';}" style="color:var(--muted);font-size:0.88rem;text-decoration:none">12 වසර පාඩම් වෙත</a>
   </div>
 </div>
-<script>
-(function(){
-  var PK = "NIRO00@@";
-  var STORAGE_KEY = "et_site_auth";
-  window.verifySitePasskey = function(){
-    var input = document.getElementById("site-passkey-input");
-    var err = document.getElementById("passkey-error");
-    if(!input) return;
-    if(input.value === PK){
-      try {
-        sessionStorage.setItem(STORAGE_KEY, "ok");
-      } catch(e){}
-      var overlay = document.getElementById("passkey-overlay");
-      if(overlay){
-        overlay.style.transition = "opacity 0.3s ease";
-        overlay.style.opacity = "0";
-        setTimeout(function(){ overlay.remove(); document.body.classList.remove('site-locked'); }, 300);
-      }
-    } else {
-      if(err){
-        err.style.display = "block";
-        input.focus();
-        input.select();
-      }
-    }
-  };
-  window.togglePasskeyVis = function(){
-    var input = document.getElementById("site-passkey-input");
-    var btn = document.getElementById("passkey-toggle-btn");
-    if(input && btn){
-      if(input.type === "password"){
-        input.type = "text";
-        btn.textContent = "🙈";
-      } else {
-        input.type = "password";
-        btn.textContent = "👁️";
-      }
-    }
-  };
-  window.lockSite = function(){
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-      sessionStorage.removeItem(STORAGE_KEY);
-    } catch(e){}
-    location.reload();
-  };
-  function initPasskey(){
-    var auth = false;
-    try {
-      if(localStorage.getItem(STORAGE_KEY) === "ok" || sessionStorage.getItem(STORAGE_KEY) === "ok"){
-        auth = true;
-      }
-    } catch(e){}
-    var overlay = document.getElementById("passkey-overlay");
-    if(auth && overlay){
-      overlay.remove(); document.body.classList.remove('site-locked');
-    } else if(overlay){
-      overlay.style.display = "flex";
-      setTimeout(function(){
-        var inp = document.getElementById("site-passkey-input");
-        if(inp) inp.focus();
-      }, 100);
-    }
-  }
-  if(document.readyState === "loading"){
-    document.addEventListener("DOMContentLoaded", initPasskey);
-  } else {
-    initPasskey();
-  }
-})();
-</script>
-<div style="position:sticky;top:0;z-index:10;padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
-  <a href="motion.html" style="color:var(--accent);font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px">← පාඩම 08 සිමියුලේටර් වෙත</a>
-  <a href="index.html#g12" style="color:var(--muted);font-weight:600;font-size:0.9rem;text-decoration:none">12 වසර පාඩම් වෙත →</a>
-</div>
 <div class="wrap">
-<div style="background:#0e1d2c;padding:10px 18px;border-bottom:1px solid #23415c;display:flex;justify-content:space-between;align-items:center;font-family:sans-serif;font-size:13.5px;"><a href="Final.html#/lesson/g12-08" style="color:#5eead4;text-decoration:none;font-weight:700;">← ප්‍රධාන පාඩම් මොඩියුල වෙත (Back to Lesson 08 Hub)</a><a href="motion.html" style="color:#ffd700;text-decoration:none;font-weight:700;">🎮 සජීවී සිමියුලේටර් වෙත →</a></div>
 <header>
   <h1>චලනය හා බල සම්ප්‍රේෂණය</h1>
   <p>උසස් පෙළ ඉංජිනේරු තාක්ෂණවේදය • 12 ශ්‍රේණිය • 08 වන පාඩම • සූත්‍ර ගණකය</p>
